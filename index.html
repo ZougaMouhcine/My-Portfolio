@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zouga Mouhcine | AI & Data Technologies Engineer</title>
+    <meta
+      name="description"
+      content="Portfolio of Zouga Mouhcine, AI & Data Technologies engineering student at ENSAM Meknes and freelance software developer."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --forest: #546b41;
+        --olive: #99ad7a;
+        --sand: #dcccac;
+        --cream: #fff8ec;
+        --ink: #142014;
+        --paper: #fffdf8;
+        --muted: #5b6652;
+        --line: #d9ceb8;
+        --section-gap: clamp(4rem, 8vw, 8rem);
+        --radius-lg: 24px;
+        --radius-md: 14px;
+        --shadow-soft: 0 20px 45px rgba(48, 64, 38, 0.1);
+        --shadow-card: 0 15px 35px rgba(69, 87, 55, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Space Grotesk", sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        line-height: 1.6;
+      }
+
+      .media-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .media-backdrop::before {
+        content: "";
+        position: absolute;
+        inset: -4%;
+        background-image: linear-gradient(125deg, rgba(255, 248, 236, 0.88), rgba(255, 253, 248, 0.9)),
+          url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2400&q=80"),
+          url("https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1800&q=80"),
+          url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=80");
+        background-size: cover, cover, 44% 100%, 40% 100%;
+        background-position: center, center, right center, left center;
+        background-repeat: no-repeat;
+        filter: saturate(0.82) contrast(0.95);
+        animation: ambientDrift 34s ease-in-out infinite alternate;
+      }
+
+      .media-backdrop::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 253, 248, 0.5) 0%,
+          rgba(255, 253, 248, 0.26) 22%,
+          rgba(255, 253, 248, 0.52) 60%,
+          rgba(255, 253, 248, 0.72) 100%
+        );
+      }
+
+      .texture {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.28;
+        z-index: 0;
+        background-image: linear-gradient(to right, rgba(84, 107, 65, 0.04) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(84, 107, 65, 0.04) 1px, transparent 1px);
+        background-size: 34px 34px;
+      }
+
+      .site {
+        position: relative;
+        z-index: 1;
+      }
+
+      .container {
+        width: min(1160px, 92vw);
+        margin: 0 auto;
+      }
+
+      .section {
+        padding: var(--section-gap) 0;
+      }
+
+      .section-title {
+        margin: 0 0 1.25rem;
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.78rem;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--forest);
+        background: rgba(153, 173, 122, 0.2);
+        border: 1px solid rgba(84, 107, 65, 0.25);
+        border-radius: 999px;
+        padding: 0.25rem 0.65rem;
+        margin-bottom: 1rem;
+      }
+
+      .eyebrow-accent {
+        background: var(--forest);
+        color: var(--cream);
+        border-color: var(--forest);
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 253, 248, 0.82);
+        border-bottom: 1px solid rgba(84, 107, 65, 0.1);
+        transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .topbar.scrolled {
+        background: rgba(255, 253, 248, 0.96);
+        border-bottom-color: rgba(84, 107, 65, 0.22);
+        box-shadow: 0 10px 24px rgba(67, 86, 52, 0.08);
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.9rem 0;
+        transition: padding 0.3s ease;
+      }
+
+      .topbar.scrolled .nav {
+        padding: 0.62rem 0;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.72rem;
+        text-decoration: none;
+        color: var(--ink);
+      }
+
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+        flex: 0 0 auto;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(145deg, rgba(220, 204, 172, 0.65), rgba(153, 173, 122, 0.58));
+        border: 1px solid rgba(84, 107, 65, 0.35);
+        box-shadow: 0 8px 18px rgba(84, 107, 65, 0.16);
+      }
+
+      .brand-mark-text {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.94rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: var(--forest);
+      }
+
+      .brand-wordmark {
+        display: grid;
+        line-height: 1;
+        gap: 0.2rem;
+      }
+
+      .brand-title {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 1.05rem;
+        letter-spacing: 0.01em;
+      }
+
+      .brand-sub {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.66rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .nav-links {
+        display: none;
+        gap: 1.2rem;
+      }
+
+      .nav-links a {
+        position: relative;
+        text-decoration: none;
+        color: var(--muted);
+        font-size: 0.96rem;
+        padding-bottom: 0.25rem;
+        transition: color 0.2s ease;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -0.05rem;
+        height: 2px;
+        border-radius: 999px;
+        background: var(--forest);
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 0.2s ease;
+      }
+
+      .nav-links a:hover,
+      .nav-links a:focus-visible {
+        color: var(--forest);
+      }
+
+      .nav-links a[href="#experience"],
+      .nav-links a[href="#timeline"] {
+        color: var(--forest);
+      }
+
+      .nav-links a:hover::after,
+      .nav-links a:focus-visible::after,
+      .nav-links a.is-active::after {
+        transform: scaleX(1);
+      }
+
+      .nav-links a.is-active {
+        color: var(--forest);
+      }
+
+      .hero {
+        padding-top: clamp(2.5rem, 6vw, 5rem);
+      }
+
+      .hero-grid {
+        display: grid;
+        gap: 1.6rem;
+      }
+
+      .hero-copy {
+        position: relative;
+        background: linear-gradient(140deg, rgba(255, 248, 236, 0.95), rgba(255, 255, 255, 0.95));
+        border: 1px solid rgba(84, 107, 65, 0.2);
+        box-shadow: var(--shadow-soft);
+        border-radius: var(--radius-lg);
+        padding: clamp(1.2rem, 3vw, 2rem);
+      }
+
+      .hero .hero-cinematic-left[data-animate] {
+        opacity: 0;
+        transform: translateX(-34px) scale(0.985);
+        filter: blur(8px);
+      }
+
+      .hero .hero-cinematic-right[data-animate] {
+        opacity: 0;
+        transform: translateX(34px) scale(0.985);
+        filter: blur(8px);
+      }
+
+      body.page-loaded .hero .hero-cinematic-left[data-animate] {
+        animation: heroInLeft 0.95s cubic-bezier(0.2, 0.72, 0.2, 1) forwards;
+      }
+
+      body.page-loaded .hero .hero-cinematic-right[data-animate] {
+        animation: heroInRight 0.95s cubic-bezier(0.2, 0.72, 0.2, 1) 0.09s forwards;
+      }
+
+      .hero-kicker {
+        font-family: "IBM Plex Mono", monospace;
+        color: var(--forest);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        margin: 0 0 0.6rem;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2.2rem, 8vw, 5rem);
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+      }
+
+      .hero-title {
+        margin: 1.1rem 0 0;
+        font-size: clamp(1rem, 2.2vw, 1.2rem);
+        color: var(--muted);
+      }
+
+      .hero-tagline {
+        margin-top: 1rem;
+        max-width: 58ch;
+      }
+
+      .hero-photo-wrap {
+        position: relative;
+        margin-top: 1.2rem;
+      }
+
+      .hero-card {
+        background: white;
+        border: 1px solid rgba(84, 107, 65, 0.22);
+        border-radius: var(--radius-md);
+        padding: 1rem;
+        box-shadow: var(--shadow-card);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 0.8rem;
+      }
+
+      .hero-middle {
+        flex: 1;
+        border: 1px solid rgba(84, 107, 65, 0.22);
+        border-radius: 12px;
+        background: linear-gradient(150deg, rgba(255, 248, 236, 0.8), rgba(153, 173, 122, 0.16));
+        padding: 0.9rem;
+        display: grid;
+        align-content: center;
+        gap: 0.45rem;
+      }
+
+      .hero-middle-title {
+        margin: 0;
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+      }
+
+      .hero-middle-line {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      .hero-middle-list {
+        margin: 0.2rem 0 0;
+        padding-left: 1rem;
+        display: grid;
+        gap: 0.28rem;
+        color: var(--ink);
+        font-size: 0.88rem;
+      }
+
+      .hero-meta {
+        margin-top: auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+      }
+
+      .meta-chip {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.75rem;
+        color: var(--forest);
+        border: 1px dashed rgba(84, 107, 65, 0.35);
+        border-radius: 999px;
+        padding: 0.28rem 0.62rem;
+        background: rgba(153, 173, 122, 0.14);
+      }
+
+      .avatar {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid rgba(84, 107, 65, 0.24);
+        box-shadow: 0 15px 30px rgba(84, 107, 65, 0.18);
+      }
+
+      .hero-photo {
+        position: relative;
+        width: fit-content;
+        margin-inline: auto;
+      }
+
+      .hero-photo::before,
+      .hero-photo::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        border-radius: 50%;
+      }
+
+      .hero-photo::before {
+        width: 120px;
+        height: 120px;
+        background: rgba(220, 204, 172, 0.65);
+        left: -16px;
+        top: -12px;
+      }
+
+      .hero-photo::after {
+        width: 90px;
+        height: 90px;
+        background: rgba(153, 173, 122, 0.45);
+        right: -10px;
+        bottom: -10px;
+      }
+
+      .hero-actions {
+        margin-top: 1.6rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.85rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        border-radius: 999px;
+        padding: 0.7rem 1.15rem;
+        font-weight: 600;
+        font-size: 0.94rem;
+        transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.25s ease;
+      }
+
+      .btn-primary {
+        background: var(--forest);
+        color: var(--cream);
+        box-shadow: 0 8px 24px rgba(69, 87, 55, 0.28);
+      }
+
+      .btn-primary:hover,
+      .btn-primary:focus-visible {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 28px rgba(69, 87, 55, 0.33);
+      }
+
+      .btn-secondary {
+        background: rgba(220, 204, 172, 0.35);
+        color: var(--ink);
+        border: 1px solid rgba(84, 107, 65, 0.28);
+      }
+
+      .btn-secondary:hover,
+      .btn-secondary:focus-visible {
+        background: rgba(153, 173, 122, 0.28);
+        transform: translateY(-2px);
+      }
+
+      .about-grid {
+        display: grid;
+        gap: 1.8rem;
+        align-items: center;
+      }
+
+      .about-visual {
+        display: flex;
+        justify-content: center;
+      }
+
+      .about-visual .avatar {
+        width: clamp(240px, 30vw, 340px);
+        height: clamp(240px, 30vw, 340px);
+      }
+
+      .about-card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        padding: clamp(1.2rem, 2.6vw, 1.8rem);
+        box-shadow: var(--shadow-card);
+      }
+
+      .about-card p {
+        margin: 0.4rem 0;
+      }
+
+      .languages {
+        margin-top: 1.1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .language-chip {
+        border: 1px solid rgba(84, 107, 65, 0.28);
+        border-radius: 999px;
+        padding: 0.35rem 0.7rem;
+        font-size: 0.84rem;
+        background: rgba(153, 173, 122, 0.13);
+      }
+
+      .skills-matrix-wrap {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-card);
+        overflow-x: auto;
+      }
+
+      .skills-matrix {
+        width: 100%;
+        min-width: 860px;
+        border-collapse: collapse;
+      }
+
+      .skills-matrix thead {
+        background: linear-gradient(150deg, rgba(220, 204, 172, 0.36), rgba(153, 173, 122, 0.12));
+      }
+
+      .skills-matrix th {
+        text-align: left;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--forest);
+        padding: 0.9rem 0.85rem;
+      }
+
+      .skills-matrix td {
+        padding: 0.9rem 0.85rem;
+        border-top: 1px solid rgba(84, 107, 65, 0.16);
+        vertical-align: top;
+        font-size: 0.93rem;
+      }
+
+      .skills-domain {
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+      }
+
+      .skills-tools {
+        color: var(--muted);
+      }
+
+      .depth-badge {
+        display: inline-block;
+        border-radius: 999px;
+        padding: 0.24rem 0.58rem;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+        border: 1px solid rgba(84, 107, 65, 0.28);
+      }
+
+      .depth-core {
+        background: rgba(84, 107, 65, 0.14);
+        color: var(--forest);
+      }
+
+      .depth-strong {
+        background: rgba(153, 173, 122, 0.2);
+        color: #2c3a21;
+      }
+
+      .skills-evidence {
+        color: var(--forest);
+        text-decoration-thickness: 1px;
+      }
+
+      .skills-note {
+        margin: 0;
+        padding: 0.95rem 1rem;
+        border-top: 1px solid rgba(84, 107, 65, 0.16);
+        font-size: 0.88rem;
+        color: var(--muted);
+        background: rgba(255, 248, 236, 0.52);
+      }
+
+      .projects-grid {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .project-card {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        padding: 1.15rem;
+        box-shadow: var(--shadow-card);
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .project-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0;
+        background: radial-gradient(
+          220px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+          rgba(153, 173, 122, 0.22),
+          rgba(153, 173, 122, 0) 60%
+        );
+        transition: opacity 0.24s ease;
+      }
+
+      .project-card:hover::before,
+      .project-card:focus-within::before {
+        opacity: 1;
+      }
+
+      .project-card > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .project-card:hover,
+      .project-card:focus-within {
+        transform: translateY(-6px);
+        border-color: rgba(84, 107, 65, 0.45);
+        box-shadow: 0 22px 32px rgba(84, 107, 65, 0.16);
+      }
+
+      .project-title-wrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 0.8rem;
+      }
+
+      .project-card h3 {
+        margin: 0 0 0.5rem;
+        font-family: "Syne", sans-serif;
+        font-size: 1.25rem;
+      }
+
+      .project-link {
+        color: var(--forest);
+        font-size: 0.9rem;
+        text-decoration-thickness: 1px;
+      }
+
+      .project-status {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #2c3a21;
+        border: 1px solid rgba(84, 107, 65, 0.25);
+        border-radius: 999px;
+        padding: 0.26rem 0.56rem;
+        background: rgba(153, 173, 122, 0.24);
+      }
+
+      .project-status-live {
+        animation: statusPulse 2.6s ease-in-out infinite;
+      }
+
+      .project-company {
+        margin: 0.6rem 0 0.8rem;
+        padding: 0.55rem 0.65rem;
+        border: 1px solid rgba(84, 107, 65, 0.18);
+        border-radius: 10px;
+        background: rgba(255, 248, 236, 0.56);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+      }
+
+      .company-logo {
+        width: 92px;
+        height: auto;
+        display: block;
+      }
+
+      .company-name {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+      }
+
+      .project-footer {
+        margin-top: 0.95rem;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .tag {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.72rem;
+        border: 1px solid rgba(84, 107, 65, 0.25);
+        border-radius: 999px;
+        padding: 0.28rem 0.58rem;
+        background: rgba(220, 204, 172, 0.28);
+      }
+
+      .timeline {
+        position: relative;
+        margin-top: 0.5rem;
+      }
+
+      .timeline::before {
+        content: none;
+      }
+
+      .timeline-item {
+        position: relative;
+        padding-left: 0;
+        padding-bottom: 0;
+      }
+
+      .timeline-item::before {
+        content: none;
+      }
+
+      .timeline-item h3 {
+        margin: 0;
+        font-family: "Syne", sans-serif;
+      }
+
+      .achievement-card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        padding: 1.2rem;
+        box-shadow: var(--shadow-card);
+      }
+
+      .achievement-card h3 {
+        font-size: 1.28rem;
+      }
+
+      .timeline-meta {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin: 0.3rem 0 0.55rem;
+      }
+
+      .experience-card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        padding: 1.2rem;
+        box-shadow: var(--shadow-card);
+      }
+
+      .experience-card h3 {
+        margin: 0;
+        font-family: "Syne", sans-serif;
+        font-size: 1.35rem;
+      }
+
+      .experience-subtitle {
+        margin: 0.45rem 0 0;
+        color: var(--muted);
+      }
+
+      .experience-date {
+        margin: 0.45rem 0 0;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.82rem;
+        color: var(--forest);
+      }
+
+      .experience-list {
+        margin: 1rem 0 0;
+        padding-left: 1.15rem;
+      }
+
+      .experience-list li {
+        margin-bottom: 0.55rem;
+      }
+
+      .contact-card {
+        background: linear-gradient(150deg, rgba(255, 248, 236, 0.82), rgba(153, 173, 122, 0.18));
+        border: 1px solid rgba(84, 107, 65, 0.25);
+        border-radius: var(--radius-lg);
+        padding: clamp(1.1rem, 2.7vw, 2rem);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .contact-links {
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+
+      .contact-links a {
+        width: 52px;
+        height: 52px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--forest);
+        text-decoration: none;
+        border: 1px solid rgba(84, 107, 65, 0.3);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.82);
+        transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+      }
+
+      .contact-links a:hover,
+      .contact-links a:focus-visible {
+        transform: translateY(-2px);
+        border-color: rgba(84, 107, 65, 0.5);
+        color: var(--cream);
+        background: var(--forest);
+      }
+
+      .contact-links a svg {
+        width: 22px;
+        height: 22px;
+        display: block;
+      }
+
+      footer {
+        padding: 2rem 0 2.6rem;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      [data-animate] {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+
+      [data-animate].visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .stagger-1 {
+        transition-delay: 0.08s;
+      }
+
+      .stagger-2 {
+        transition-delay: 0.16s;
+      }
+
+      .stagger-3 {
+        transition-delay: 0.24s;
+      }
+
+      .stagger-4 {
+        transition-delay: 0.32s;
+      }
+
+      @keyframes ambientDrift {
+        from {
+          transform: scale(1.03) translateX(-0.9%);
+        }
+        to {
+          transform: scale(1.08) translateX(0.9%);
+        }
+      }
+
+      @keyframes heroInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-34px) scale(0.985);
+          filter: blur(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0) scale(1);
+          filter: blur(0);
+        }
+      }
+
+      @keyframes heroInRight {
+        from {
+          opacity: 0;
+          transform: translateX(34px) scale(0.985);
+          filter: blur(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0) scale(1);
+          filter: blur(0);
+        }
+      }
+
+      @keyframes statusPulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(84, 107, 65, 0);
+        }
+        50% {
+          box-shadow: 0 0 0 8px rgba(84, 107, 65, 0.08);
+        }
+      }
+
+      @media (min-width: 760px) {
+        .nav-links {
+          display: flex;
+        }
+
+        .hero-grid {
+          grid-template-columns: 1.2fr 0.8fr;
+          gap: 1.2rem;
+          align-items: stretch;
+        }
+
+        .hero-photo-wrap {
+          margin-top: 0;
+          height: 100%;
+        }
+
+        .hero-card {
+          position: relative;
+          top: 0;
+          height: 100%;
+        }
+
+        .about-grid {
+          grid-template-columns: 0.4fr 0.6fr;
+        }
+
+        .projects-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 520px) {
+        .brand-sub {
+          display: none;
+        }
+      }
+
+      @media (min-width: 1100px) {
+        .hero-grid {
+          grid-template-columns: 1.3fr 0.7fr;
+          gap: 0;
+        }
+
+        .hero-copy {
+          width: 90%;
+          min-height: 100%;
+        }
+
+        .hero-card {
+          margin-left: -2.5rem;
+        }
+
+        .projects-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          scroll-behavior: auto !important;
+          transition: none !important;
+          animation: none !important;
+        }
+
+        .media-backdrop::before {
+          animation: none !important;
+          transform: none !important;
+        }
+
+        .hero .hero-cinematic-left[data-animate],
+        .hero .hero-cinematic-right[data-animate] {
+          opacity: 1 !important;
+          transform: none !important;
+          filter: none !important;
+        }
+
+        [data-animate] {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="media-backdrop" aria-hidden="true"></div>
+    <div class="texture" aria-hidden="true"></div>
+
+    <div class="site">
+      <header class="topbar">
+        <div class="container nav">
+          <a class="brand" href="#top" aria-label="Zouga Mouhcine home">
+            <span class="brand-mark" aria-hidden="true">
+              <span class="brand-mark-text">ZM</span>
+            </span>
+            <span class="brand-wordmark">
+              <span class="brand-title">Zouga Mouhcine</span>
+              <span class="brand-sub">AI & Data Engineer</span>
+            </span>
+          </a>
+          <nav class="nav-links" aria-label="Main navigation">
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#experience">Experience</a>
+            <a href="#timeline">Achievements</a>
+            <a href="#contact">Contact</a>
+          </nav>
+        </div>
+      </header>
+
+      <main id="top">
+        <section class="hero section">
+          <div class="container hero-grid">
+            <article class="hero-copy hero-cinematic-left" data-animate>
+              <p class="hero-kicker">AI · Data · Software Engineering</p>
+              <h1>Zouga<br />Mouhcine</h1>
+              <p class="hero-title">4th-year AI & Data Technologies Engineering Student · ENSAM Meknes</p>
+              <p class="hero-tagline">
+                I build things that matter: from intelligent data pipelines and machine learning systems to full-stack
+                software products, always focused on technically ambitious work with real-world impact.
+              </p>
+
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="#contact">Contact</a>
+                <a class="btn btn-secondary" href="CV_Zouga_Mouhcine.pdf" download="CV_Zouga_Mouhcine.pdf">Download CV</a>
+              </div>
+            </article>
+
+            <aside class="hero-photo-wrap hero-cinematic-right" data-animate>
+              <div class="hero-card">
+                <div class="hero-photo">
+                  <img
+                    id="profile-photo"
+                    class="avatar"
+                    src="My pic.jpeg"
+                    alt="Portrait of Zouga Mouhcine"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="hero-middle" aria-label="Current focus">
+                  <p class="hero-middle-title">Current Focus</p>
+                  <p class="hero-middle-line">Building ambitious AI products with measurable real-world value.</p>
+                  <ul class="hero-middle-list">
+                    <li>RAG / LLM workflows for practical use cases</li>
+                    <li>Data pipelines with Python ecosystem + SQL</li>
+                    <li>Full-stack delivery from backend APIs to UI</li>
+                  </ul>
+                </div>
+
+                <div class="hero-meta">
+                  <span class="meta-chip">Freelance Developer</span>
+                  <span class="meta-chip">1st Place MISI25</span>
+                  <span class="meta-chip">AI & Data Engineer</span>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="about" class="section">
+          <div class="container about-grid">
+            <div class="about-visual" data-animate>
+              <img
+                class="avatar"
+                src="pic 4.jpeg"
+                alt="Profile placeholder of Zouga Mouhcine"
+                loading="lazy"
+              />
+            </div>
+
+            <article class="about-card" data-animate>
+              <span class="eyebrow eyebrow-accent">About</span>
+              <h2 class="section-title">Engineering mind, product builder mindset.</h2>
+              <p>
+                I am Zouga Mouhcine, an AI & Data Technologies engineering student at ENSAM Meknes and freelance
+                software developer.
+              </p>
+              <p>
+                My work combines machine intelligence, robust data engineering, and practical software architecture to
+                build solutions that are reliable, useful, and scalable.
+              </p>
+              <p>
+                I secured 1st place at MISI25 Innovation Challenge and I am always onto the next challenge.
+              </p>
+
+              <div class="languages" aria-label="Spoken languages">
+                <span class="language-chip">Arabic</span>
+                <span class="language-chip">French</span>
+                <span class="language-chip">English</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="skills" class="section">
+          <div class="container" data-animate>
+            <span class="eyebrow eyebrow-accent">Skills</span>
+            <h2 class="section-title">Technical stack across AI, data, and full-stack delivery.</h2>
+
+            <div class="skills-matrix-wrap" data-animate>
+              <table class="skills-matrix" aria-label="Professional skills matrix">
+                <thead>
+                  <tr>
+                    <th>Domain</th>
+                    <th>Capabilities</th>
+                    <th>Tools / Stack</th>
+                    <th>Evidence</th>
+                    <th>Depth</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="skills-domain">AI / ML</td>
+                    <td>Machine Learning, Deep Learning, NLP, Computer Vision, RAG/LLM, Time Series, Reinforcement Learning</td>
+                    <td class="skills-tools">PyTorch, TensorFlow, Scikit-learn, OpenCV</td>
+                    <td>
+                      <a class="skills-evidence" href="https://github.com/Amine-te/VoxQuery" target="_blank" rel="noreferrer">VoxQuery</a>
+                      + MISI25 (1st Place)
+                    </td>
+                    <td><span class="depth-badge depth-core">Core</span></td>
+                  </tr>
+                  <tr>
+                    <td class="skills-domain">Data Engineering</td>
+                    <td>Data pipelines, transformation, model-ready datasets, SQL analytics</td>
+                    <td class="skills-tools">Python, NumPy, Pandas, SQL databases</td>
+                    <td>
+                      <a class="skills-evidence" href="https://github.com/ZougaMouhcine/OptiPlan-AI" target="_blank" rel="noreferrer">OptiPlan-AI</a>
+                      +
+                      <a class="skills-evidence" href="https://github.com/ZougaMouhcine/IATD-Insight" target="_blank" rel="noreferrer">IATD-Insight</a>
+                    </td>
+                    <td><span class="depth-badge depth-core">Core</span></td>
+                  </tr>
+                  <tr>
+                    <td class="skills-domain">Backend</td>
+                    <td>API design, service architecture, business logic, integrations</td>
+                    <td class="skills-tools">Python, Java, Spring Boot</td>
+                    <td>
+                      <a class="skills-evidence" href="https://github.com/ZougaMouhcine/IATD-Insight" target="_blank" rel="noreferrer">IATD-Insight</a>
+                      +
+                      <a class="skills-evidence" href="#projects">Adient informing app (ongoing)</a>
+                    </td>
+                    <td><span class="depth-badge depth-strong">Strong</span></td>
+                  </tr>
+                  <tr>
+                    <td class="skills-domain">Frontend</td>
+                    <td>Data-driven interfaces, component architecture, responsive UX</td>
+                    <td class="skills-tools">Angular, React, Tailwind CSS, HTML/CSS/JS</td>
+                    <td>
+                      <a class="skills-evidence" href="https://github.com/ZougaMouhcine/IATD-Insight" target="_blank" rel="noreferrer">IATD-Insight</a>
+                      + Portfolio website
+                    </td>
+                    <td><span class="depth-badge depth-strong">Strong</span></td>
+                  </tr>
+                  <tr>
+                    <td class="skills-domain">DevOps & Ops</td>
+                    <td>Containerization, collaborative Git workflows, Linux-based development</td>
+                    <td class="skills-tools">Docker, Docker Compose, Git, GitHub, Linux, Lean Six Sigma</td>
+                    <td>
+                      Git/GitHub delivery workflow across
+                      <a class="skills-evidence" href="https://github.com/ZougaMouhcine/OptiPlan-AI" target="_blank" rel="noreferrer">OptiPlan-AI</a>
+                      and
+                      <a class="skills-evidence" href="https://github.com/ZougaMouhcine/IATD-Insight" target="_blank" rel="noreferrer">IATD-Insight</a>
+                    </td>
+                    <td><span class="depth-badge depth-strong">Strong</span></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="skills-note">Approach: depth is represented by real delivery evidence and stack fluency, not arbitrary percentages.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="projects" class="section">
+          <div class="container" data-animate>
+            <span class="eyebrow eyebrow-accent">Projects</span>
+            <h2 class="section-title">Selected work with practical impact.</h2>
+
+            <div class="projects-grid">
+              <article class="project-card" data-animate>
+                <div class="project-title-wrap">
+                  <h3>Line Incident Informing App</h3>
+                </div>
+                <div class="project-company" aria-label="Company: Adient">
+                  <img
+                    class="company-logo"
+                    src="https://www.adient.com/wp-content/uploads/2021/09/Adient_Logo.png"
+                    alt="Adient logo"
+                    loading="lazy"
+                  />
+                  <span class="company-name">Industrial project for Adient</span>
+                </div>
+                <p>
+                  Desktop and mobile informing application for Team Leaders (TL) to report and track line incidents.
+                </p>
+                <div class="project-footer">
+                  <span class="project-status project-status-live">In Progress</span>
+                </div>
+              </article>
+
+              <article class="project-card" data-animate>
+                <div class="project-title-wrap">
+                  <h3>OptiPlan-AI</h3>
+                  <a class="project-link" href="https://github.com/ZougaMouhcine/OptiPlan-AI" target="_blank" rel="noreferrer">Repository</a>
+                </div>
+                <p>
+                  AI-powered planning assistant that turns constraints and goals into optimized schedules with a
+                  decision-oriented user experience.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">Python</span>
+                  <span class="tag">ML</span>
+                  <span class="tag">Optimization</span>
+                  <span class="tag">Data Pipelines</span>
+                </div>
+              </article>
+
+              <article class="project-card" data-animate>
+                <div class="project-title-wrap">
+                  <h3>VoxQuery</h3>
+                  <a class="project-link" href="https://github.com/Amine-te/VoxQuery" target="_blank" rel="noreferrer">Repository</a>
+                </div>
+                <p>
+                  Voice-to-query NLP system that transforms spoken input into actionable database-friendly intents for
+                  faster analytics workflows.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">NLP</span>
+                  <span class="tag">Speech</span>
+                  <span class="tag">Python</span>
+                  <span class="tag">SQL</span>
+                </div>
+              </article>
+
+              <article class="project-card" data-animate>
+                <div class="project-title-wrap">
+                  <h3>IATD-Insight</h3>
+                  <a class="project-link" href="https://github.com/ZougaMouhcine/IATD-Insight" target="_blank" rel="noreferrer">Repository</a>
+                </div>
+                <p>
+                  Feedback web platform delivered for Artificial Intelligence & Data Technologies engineering students at
+                  ENSAM Meknes to evaluate the program structure and course quality with structured insights.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">Web Platform</span>
+                  <span class="tag">Feedback Analytics</span>
+                  <span class="tag">Data Collection</span>
+                  <span class="tag">Student Experience</span>
+                </div>
+              </article>
+
+              <article class="project-card" data-animate>
+                <div class="project-title-wrap">
+                  <h3>Intelligent Data Solutions</h3>
+                </div>
+                <p>
+                  End-to-end full-stack and data projects combining backend engineering, analytics pipelines, and model
+                  integration for real-world delivery.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">Spring Boot</span>
+                  <span class="tag">Angular / React</span>
+                  <span class="tag">Docker</span>
+                  <span class="tag">MLOps</span>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="experience" class="section">
+          <div class="container" data-animate>
+            <span class="eyebrow eyebrow-accent">Professional Experience</span>
+            <h2 class="section-title">Introductory Internship - Educational Application Development</h2>
+
+            <article class="experience-card" data-animate>
+              <h3>Laboratory of AI, Data Technologies & Modeling (AIDTM) - ENSAM Meknes</h3>
+              <p class="experience-date">Jul - Aug 2025</p>
+              <ul class="experience-list">
+                <li>
+                  Designed and developed a digital application to organize and centralize educational resources for the
+                  IATD-SI program.
+                </li>
+                <li>
+                  Implemented a structured storage system for courses, internships, final-year projects, and academic
+                  documents, with easier access for instructors.
+                </li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section id="timeline" class="section">
+          <div class="container" data-animate>
+            <span class="eyebrow eyebrow-accent">Achievement</span>
+            <h2 class="section-title">Recognized for innovation and impact.</h2>
+
+            <div class="timeline">
+              <article class="timeline-item achievement-card" data-animate>
+                <h3>1st Place - MISI25 Innovation Challenge</h3>
+                <p>
+                  Awarded first place for delivering a high-impact innovation project with technical depth and practical
+                  applicability.
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" class="section">
+          <div class="container">
+            <article class="contact-card" data-animate>
+              <span class="eyebrow eyebrow-accent">Contact</span>
+              <h2 class="section-title">Let us build something ambitious.</h2>
+              <p>
+                Open to impactful collaborations in AI, data engineering, and full-stack product development.
+              </p>
+
+              <div class="contact-links">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=mouhcinzouga@gmail.com" target="_blank" rel="noreferrer" aria-label="Send email" title="Email">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M3 6.75C3 5.784 3.784 5 4.75 5H19.25C20.216 5 21 5.784 21 6.75V17.25C21 18.216 20.216 19 19.25 19H4.75C3.784 19 3 18.216 3 17.25V6.75Z" stroke="currentColor" stroke-width="1.8"/>
+                    <path d="M4 7L12 12.5L20 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/mouhcine-zouga/" target="_blank" rel="noreferrer" aria-label="Open LinkedIn" title="LinkedIn">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M7.2 9.5H4.3V19H7.2V9.5Z" fill="currentColor"/>
+                    <path d="M5.75 8.2C6.71 8.2 7.5 7.42 7.5 6.45C7.5 5.48 6.71 4.7 5.75 4.7C4.79 4.7 4 5.48 4 6.45C4 7.42 4.79 8.2 5.75 8.2Z" fill="currentColor"/>
+                    <path d="M12.1 13.9V19H15V14.3C15 13.06 15.44 12.22 16.53 12.22C17.38 12.22 17.88 12.79 18.1 13.34C18.17 13.52 18.2 13.78 18.2 14.04V19H21.1V13.67C21.1 10.82 19.58 9.5 17.55 9.5C15.9 9.5 15.16 10.41 14.74 11.05V11.08H14.72L14.74 11.05V9.5H12.1C12.13 10.53 12.1 19 12.1 19" fill="currentColor"/>
+                  </svg>
+                </a>
+                <a href="https://github.com/ZougaMouhcine" target="_blank" rel="noreferrer" aria-label="Open GitHub" title="GitHub">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 3.8C7.47 3.8 3.8 7.58 3.8 12.22C3.8 15.92 6.12 19.06 9.34 20.17C9.75 20.25 9.9 19.99 9.9 19.76C9.9 19.55 9.89 18.94 9.89 18.21C7.6 18.72 7.12 17.22 7.12 17.22C6.75 16.25 6.2 16 6.2 16C5.45 15.47 6.26 15.48 6.26 15.48C7.1 15.54 7.54 16.37 7.54 16.37C8.28 17.67 9.49 17.3 9.96 17.08C10.04 16.53 10.25 16.15 10.49 15.93C8.66 15.72 6.74 14.98 6.74 11.66C6.74 10.71 7.07 9.94 7.62 9.33C7.54 9.11 7.25 8.2 7.7 6.95C7.7 6.95 8.41 6.72 9.88 7.74C10.56 7.54 11.28 7.44 12 7.44C12.72 7.44 13.44 7.54 14.12 7.74C15.59 6.72 16.3 6.95 16.3 6.95C16.75 8.2 16.46 9.11 16.38 9.33C16.93 9.94 17.26 10.71 17.26 11.66C17.26 14.99 15.34 15.71 13.5 15.92C13.81 16.19 14.08 16.74 14.08 17.59C14.08 18.81 14.07 19.49 14.07 19.76C14.07 19.99 14.22 20.26 14.64 20.17C17.86 19.05 20.18 15.91 20.18 12.22C20.18 7.58 16.51 3.8 12 3.8Z" fill="currentColor"/>
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <div class="container">© <span id="year"></span> Zouga Mouhcine · Built with HTML, CSS, and JavaScript.</div>
+      </footer>
+    </div>
+
+    <script>
+      const topbar = document.querySelector(".topbar");
+      const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+      const sectionsForNav = navLinks
+        .map((link) => document.querySelector(link.getAttribute("href")))
+        .filter(Boolean);
+
+      const updateTopbarState = () => {
+        if (window.scrollY > 18) {
+          topbar.classList.add("scrolled");
+        } else {
+          topbar.classList.remove("scrolled");
+        }
+      };
+
+      const setActiveLink = (sectionId) => {
+        navLinks.forEach((link) => {
+          const isMatch = link.getAttribute("href") === `#${sectionId}`;
+          link.classList.toggle("is-active", isMatch);
+        });
+      };
+
+      const navObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveLink(entry.target.id);
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.45,
+          rootMargin: "-18% 0px -55% 0px",
+        }
+      );
+
+      sectionsForNav.forEach((section) => navObserver.observe(section));
+
+      window.addEventListener("scroll", updateTopbarState, { passive: true });
+      updateTopbarState();
+
+      const projectCards = document.querySelectorAll(".project-card");
+      projectCards.forEach((card) => {
+        card.addEventListener("mousemove", (event) => {
+          const rect = card.getBoundingClientRect();
+          const x = event.clientX - rect.left;
+          const y = event.clientY - rect.top;
+          card.style.setProperty("--spot-x", `${x}px`);
+          card.style.setProperty("--spot-y", `${y}px`);
+        });
+      });
+
+      const animatedElements = document.querySelectorAll(
+        "[data-animate]:not(.hero-cinematic-left):not(.hero-cinematic-right)"
+      );
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.14 }
+      );
+
+      animatedElements.forEach((element, index) => {
+        element.classList.add(`stagger-${(index % 4) + 1}`);
+        observer.observe(element);
+      });
+
+      requestAnimationFrame(() => {
+        document.body.classList.add("page-loaded");
+      });
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
